@@ -1,12 +1,17 @@
 /*Selecionando elementos a serem manipulados */
 const formulario = document.querySelector("form");
 const campoCep = formulario.querySelector("#cep");
+const campoTelefone = formulario.querySelector("#telefone");
 const campoEndereco = formulario.querySelector("#endereco");
 const campoBairro = formulario.querySelector("#bairro");
 const campoCidade = formulario.querySelector("#cidade");
 const campoEstado = formulario.querySelector("#estado");
-const status = formulario.querySelector("#status");
+const mensagem = formulario.querySelector("#status");
 const botaolocalizar = formulario.querySelector("#localizar-cep");
+
+/* Ativação das máscaras com jQuer Mask */
+$(campoCep).mask("00000-000");
+$(campoTelefone).mask("(00) 0000-0000");
 
  /* Monitorar o movimento de acionamento do botão de localizar cep */
  botaolocalizar.addEventListener("click", function(event){
@@ -45,12 +50,15 @@ const botaolocalizar = formulario.querySelector("#localizar-cep");
 
         if("erro" in dados){
             // Apresentamos a mensagem abaixo 
-            console.log("CEP não encontrado!");
+            mensagem.innerHTML = "CEP não encontrado!";
+            mensagem.style.color = "red";
+            campoCep.focus();
         }else {
             // Senão, o cep existe então mostramos:
-            console.log("CEP encontrado!");
+            mensagem.innerHTML = "CEP encontrado!";
+            mensagem.style.color = "blue";
             
-        
+            // Mostramos os dados nos campos 
             campoEndereco.value = dados.logradouro;
             campoBairro.value = dados.bairro;
             campoCidade.value = dados.localidade;
